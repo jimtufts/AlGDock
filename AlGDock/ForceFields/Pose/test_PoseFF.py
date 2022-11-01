@@ -34,7 +34,7 @@ ExternalRestraintFF = ExternalRestraintForceField(*ExternalRestraintSpecs)
 compoundFF = amberFF + InternalRestraintFF + ExternalRestraintFF
 universe.setForceField(compoundFF)
 
-print universe.energyTerms()
+print( universe.energyTerms())
 
 #
 #  universe.writeToFile("1s3v.pdb")

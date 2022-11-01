@@ -9,7 +9,7 @@ import os
 if not os.path.exists(args.in_FN):
   raise Exception(args.in_FN+' does not exist!')
 
-print 'Processing '+args.in_FN
+print( 'Processing '+args.in_FN)
 
 import chimera
 ligand = chimera.openModels.open(args.in_FN)
@@ -17,7 +17,7 @@ ligand = chimera.openModels.open(args.in_FN)
 try:
   chimera.runCommand("addcharge nonstd #0 %s method am1"%args.net_charge)
 except:
-  print 'ANTECHAMBER failed, using Gasteiger charges'
+  print( 'ANTECHAMBER failed, using Gasteiger charges')
   ligand[0].name = ligand[0].name + '-Gasteiger'
   chimera.runCommand("addcharge nonstd #0 %s method gas"%args.net_charge)
 

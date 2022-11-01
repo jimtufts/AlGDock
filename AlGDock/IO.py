@@ -261,7 +261,7 @@ class crd:
       # AMBER format
       file_natoms = int(dat.pop(0))  # Number of atoms
       if (natoms is not None) and (file_natoms != natoms):
-        print "Incorrect number of atoms in crd file"
+        print( "Incorrect number of atoms in crd file")
         return np.array([])
 
       if trajectory:
@@ -277,7 +277,7 @@ class crd:
       crd = multiplier * crd
     if (natoms is not None):
       crd = np.vsplit(crd, crd.shape[0] / natoms)
-      print "  read %d configurations from %s" % (len(crd), FN)
+      print( "  read %d configurations from %s" % (len(crd), FN))
 
     if return_title:
       return (crd, title)

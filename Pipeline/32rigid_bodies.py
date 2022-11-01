@@ -72,9 +72,9 @@ def bPDBprint_atom(record, name, position):
 	resSeq = 1
 	occupancy = 1.0
 	tempFactor = 0.0
-	print '{0:<6}{1:>5}{2:>4}{3} {4} {5}{6:>4}    {7:8.3f}{8:8.3f}{9:8.3f}  {10:4.2f}{11:6.2f}'.format\
+	print( '{0:<6}{1:>5}{2:>4}{3} {4} {5}{6:>4}    {7:8.3f}{8:8.3f}{9:8.3f}  {10:4.2f}{11:6.2f}'.format\
 		(record, serial, name, altLoc, resName, chainID, resSeq, \
-		position.x(), position.y(), position.z(), occupancy, tempFactor)
+		position.x(), position.y(), position.z(), occupancy, tempFactor))
 # END FUNC   bdiff  @@@@@
 
 
@@ -122,7 +122,7 @@ def anchor(universe):
 					a2i = i;
 					a3i = j;
 					break
-		print 'anchor using: ', a1i, a2i, a3i
+		print( 'anchor using: ', a1i, a2i, a3i)
 		
 		v1 = universe.atomList()[a1i].position();
 		v2 = universe.atomList()[a1i].bondedTo()[a2i].position();
@@ -168,7 +168,7 @@ def anchor(universe):
 		universe.applyTransformation(rot03);
 	
 	else:
-		print "Molecule too little to be anchored";
+		print( "Molecule too little to be anchored")
 #--------------------------------------------------
 
 
@@ -248,15 +248,15 @@ class bConvertor():
 	
 	def print_internals(self):
 		"""Writes Bonds, Angles & Dihedrals to stdout"""
-		print "Bonds";
+		print( "Bonds")
 		for i in self.bonds :
-			print i;
-		print "Angles";
+			print( i)
+		print( "Angles")
 		for i in self.angles :
-			print i
-		print "Dihedrals"
+			print( i)
+		print( "Dihedrals")
 		for i in self.dihedrals :
-			print i;
+			print( i)
 	#---------------------------------------------
 	
 	def swap_bond(self, bond):
@@ -366,7 +366,7 @@ class bConvertor():
 		a4   = dihe[1][1][1]
 		bv3  = dihe[1][1][2]
 		av2  = dihe[1][2]
-		print '{0:>4} {1:>4} {2:>4} {3:>4} {4:>10.6f} {5:>4} {6:>10.6f} {7:>4} {8:>10.6f}'.format(a1.index+1, a1.name, a1.name[0], a2.index+1, bv1*10.0, a3.index+1, av1, a4.index+1, dihe[2])
+		print( '{0:>4} {1:>4} {2:>4} {3:>4} {4:>10.6f} {5:>4} {6:>10.6f} {7:>4} {8:>10.6f}'.format(a1.index+1, a1.name, a1.name[0], a2.index+1, bv1*10.0, a3.index+1, av1, a4.index+1, dihe[2]))
 	#---------------------------------------------
 
 
@@ -416,7 +416,7 @@ class bConvertor():
 		while len(known_atoms) < len(universe.atomList()):
 			cnt += 1
 			if cnt > 9999:
-				print 'NeRFinte2cart() cnt EXCEEDED: 9999'
+				print( 'NeRFinte2cart() cnt EXCEEDED: 9999')
 				break
 			ai = -1
 			for a in unknown_atoms:
@@ -553,7 +553,7 @@ class bConvertor():
 		while len(known_atoms) < len(universe.atomList()):
 			cnt += 1
 			if cnt > 9999:
-				print 'inte2cart() cnt EXCEEDED: 9999'
+				print( 'inte2cart() cnt EXCEEDED: 9999')
 				break
 			ai = -1
 			for a in unknown_atoms:
@@ -674,7 +674,7 @@ class bRBSelector():
 			else:
 				self.cnt += 1
 				if self.cnt > (universe.numberOfAtoms()*universe.numberOfAtoms()):
-					print 'findPaths(): cnt EXCEEDED!'
+					print( 'findPaths(): cnt EXCEEDED!')
 					break
 				if not self.wostack:
 					break
@@ -783,14 +783,14 @@ class bRBSelector():
 		"""Prints atring list to stdout"""
 		if(len(self.atring) > 1) :
 			if(self.atring[0] != self.atring[1]) :
-				print self.atring[0]
+				print( self.atring[0])
 			for i in range(1,len(self.atring)):
 				if self.atring[i] != self.atring[i-1] :
-					print self.atring[i]
+					print( self.atring[i])
 		elif (len(self.atring) == 1):
-			print self.atring[0]
+			print( self.atring[0])
 		else:
-			print 'No rings found'
+			print( 'No rings found')
 	#---------------------------------------------
 
 	def print_rings(self):
@@ -837,7 +837,7 @@ class bRBSelector():
 			pass
 			#print 'No rings found'
 		fin_string += ']'
-		print fin_string
+		print( fin_string)
 	#---------------------------------------------
 
 
@@ -893,7 +893,7 @@ class bRBSelector():
 			fin_str += ')'
 			k += 1
 		fin_str += ']'
-		print fin_str
+		print( fin_str)
 #			print bo
 #		print '------------------'
 
@@ -968,7 +968,7 @@ class bRBSelector():
 		Eliminates correlated dihedrals by 
 		replacing them with differences
 		"""
-		print 'BEGIN diffPseudoDihe() =========='
+		print( 'BEGIN diffPseudoDihe() ==========')
 		#for ai in universe.atomList():
 		#	print ai.position()
 
@@ -1001,7 +1001,7 @@ class bRBSelector():
 
 
 		for ri in self.atring:
-			print ri
+			print( ri)
 			for rj in ri:
 				stick = -1
 				for bi in self.stickbonds:
@@ -1010,8 +1010,8 @@ class bRBSelector():
 					elif bi[1] == rj:
 						stick = 0
 					if stick >= 0:
-						print '[',universe.atomList()[bi[0]].name,\
-								universe.atomList()[bi[1]].name, '] :'
+						print( '[',universe.atomList()[bi[0]].name,\
+								universe.atomList()[bi[1]].name, '] :')
 						# Search dihedrals
 						for di in self.dihedrals:
 							a2 = di[0][0][1]
@@ -1019,10 +1019,10 @@ class bRBSelector():
 							if ((a2.index == bi[0] and a3.index == bi[1]) or\
 								(a2.index == bi[1] and a3.index == bi[0])):
 									convertor.print_zmat_dihe(di)
-						print '+++++++++++++++'
+						print( '+++++++++++++++')
 						break
 
-		print 'END   diffPseudoDihe() =========='
+		print( 'END   diffPseudoDihe() ==========')
 
 #-------------------------------------------------------------------------
 

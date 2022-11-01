@@ -26,7 +26,7 @@ if args.reference:
   if os.path.isfile('../search_options.py'):
     execfile('../search_options.py')
     ref_pdb_chain_id = ref_pdb_id + ref_chain_id
-    print 'Reference pdb is %s, chain %s'%(ref_pdb_id, ref_chain_id)
+    print( 'Reference pdb is %s, chain %s'%(ref_pdb_id, ref_chain_id))
   else:
     raise Exception('Reference model not selected!')
 
@@ -53,16 +53,16 @@ for templateFN in templateFNs:
     os.makedirs(pdb_chain_id)
   os.chdir(pdb_chain_id)
 
-  print 'Working in %s, building homology model(s) based on %s'%(\
-    os.getcwd(),pdb_chain_id)
+  print( 'Working in %s, building homology model(s) based on %s'%(\
+    os.getcwd(),pdb_chain_id))
   jobname = pdb_chain_id
   command = '{0} {1}/homology_model.modeller.py ' + \
             '--sequence_ali ../{2} --template_pdb ../{3}'
   command = command.format('mod9.18', dirs['script'], \
                            args.sequence_ali, templateFN)
-  print command
+  print( command)
 
-  print 'Submitting: ' + command
+  print( 'Submitting: ' + command)
   import subprocess
   subprocess.call(['python',command_paths['qsub_command'],\
     jobname, command] + {True:['--dry'],False:[]}[args.dry])

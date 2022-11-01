@@ -97,10 +97,10 @@ class Topology:
         if len(ligand_ind) == 0:
           raise Exception('Ligand not found in complex prmtop')
         elif len(ligand_ind) > 1:
-          print '  possible ligand residue labels: '+\
-            ', '.join([prmtop_RL['RESIDUE_LABEL'][ind] for ind in ligand_ind])
-        print 'ligand residue name: ' + \
-          prmtop_RL['RESIDUE_LABEL'][ligand_ind[0]].strip()
+          print( '  possible ligand residue labels: '+\
+            ', '.join([prmtop_RL['RESIDUE_LABEL'][ind] for ind in ligand_ind]))
+        print( 'ligand residue name: ' + \
+          prmtop_RL['RESIDUE_LABEL'][ligand_ind[0]].strip())
         self.L_first_atom = prmtop_RL['RESIDUE_POINTER'][ligand_ind[0]] - 1
       else:
         self.L_first_atom = 0

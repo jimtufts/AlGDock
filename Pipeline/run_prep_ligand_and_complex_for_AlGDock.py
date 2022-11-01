@@ -70,19 +70,19 @@ for dirN in [args.ligand_out, args.complex_out]:
   if not os.path.isdir(dirN):
     os.system('mkdir -p '+dirN)
 
-print '%d ligand(s) and %d receptor(s) found'%(len(in_ligand_FNs),len(receptor_FNs))
+print( '%d ligand(s) and %d receptor(s) found'%(len(in_ligand_FNs),len(receptor_FNs)))
 
 if (args.library_requirement is not None):
   in_ligand_FNs = [FN for FN in in_ligand_FNs \
     if FN[len(args.ligand_in)+1:].find(args.library_requirement)>-1]
-  print '%d ligand(s) meet the library requirement'%(len(in_ligand_FNs))
+  print( '%d ligand(s) meet the library requirement'%(len(in_ligand_FNs)))
 
 if (args.prepare_number is not None) and (args.prepare_number < len(in_ligand_FNs)):
   import numpy as np
   inds_o = set([int(np.floor(ind)) \
     for ind in np.linspace(0,len(in_ligand_FNs)-1,args.prepare_number)])
   in_ligand_FNs = [in_ligand_FNs[ind] for ind in inds_o]
-  print '%d ligand(s) will be prepared'%(len(in_ligand_FNs))
+  print( '%d ligand(s) will be prepared'%(len(in_ligand_FNs)))
 
 # TODO: Prepare top ligands from dock6
 #  if (args.prepare_first is not None) or (args.prepare_number is not None):
@@ -146,13 +146,13 @@ for receptor_FN in receptor_FNs:
     if ncommands==args.job_block or \
       ((ncommands>0) and (in_ligand_FN==in_ligand_FNs[-1])):
       command = '; '.join(command_list)
-      print 'Submitting: ' + command
+      print( 'Submitting: ' + command)
       os.system(' '.join(['python',command_paths['qsub_command'],\
         labels['complex'], "'"+command+"'", '--ambertools', \
         {True:'--dry',False:''}[args.dry]]))
       command_list = []
       job_count += 1
-      print 'Submitted %d jobs\n'%job_count
+      print( 'Submitted %d jobs\n'%job_count)
       if (args.max_jobs is not None) and (job_count>=args.max_jobs):
         break
   if (args.max_jobs is not None) and (job_count>=args.max_jobs):

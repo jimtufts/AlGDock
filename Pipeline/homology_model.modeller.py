@@ -21,8 +21,8 @@ if not os.path.isfile(args.sequence_ali):
 if not os.path.isfile(args.template_pdb):
   raise Exception('Template PDB file missing or is not a file!')
 
-print 'Generating homology model for sequence in %s based on %s'%(\
-  args.sequence_ali, args.template_pdb)
+print( 'Generating homology model for sequence in %s based on %s'%(\
+  args.sequence_ali, args.template_pdb))
 
 basename = os.path.basename(args.template_pdb)
 pdb_id = basename[:4]
@@ -47,7 +47,7 @@ if not os.path.exists(alignment_FN):
   aln.align2d()
   cdir = os.getcwd()
   aln.write(file=alignment_FN, alignment_format='PIR')
-  print 'Completed 2D sequence alignment in %f s'%(time.time()-start_time)
+  print( 'Completed 2D sequence alignment in %f s'%(time.time()-start_time))
 
 # Read the aligned sequence of the crystal structure
 F = open(alignment_FN,'r')
@@ -58,15 +58,15 @@ knowns = seqs[1][:seqs[1].find('\n')]
 seqid = seqs[2][:seqs[2].find('\n')]
 sequence_pdb = ''.join(seqs[1].split('\n')[2:])
 
-print 'The aligned sequence of the PDB file is ',sequence_pdb
-print sequence_pdb.replace('-',' ').strip().find(' ')
+print( 'The aligned sequence of the PDB file is ',sequence_pdb)
+print( sequence_pdb.replace('-',' ').strip().find(' '))
 
 # Do homology modelling
 start_time = time.time()
 
 loopExists = sequence_pdb.replace('-',' ').strip().find(' ')!=-1
 if loopExists:
-  print 'There are one or more loops in ', pdb_id, 'chain ', chain_id
+  print( 'There are one or more loops in ', pdb_id, 'chain ', chain_id)
   a = modeller.automodel.loopmodel(env,
     alnfile=alignment_FN,             # alignment filename
     knowns=knowns,                    # codes of the templates
@@ -87,7 +87,7 @@ a.ending_model  = 1                 # index of the last model
 a.md_level = None
 
 a.make()                            # do homology modeling
-print 'Completed homology modeling in %f s'%(time.time()-start_time)
+print( 'Completed homology modeling in %f s'%(time.time()-start_time))
 
 # Organize files
 import glob, shutil
@@ -99,7 +99,7 @@ for dest_dir in ['pdb_noH','sequence_alignment']:
 pdb_FNs = []
 if loopExists:
   # Rank models by DOPE score
-  print 'Ranking models by DOPE score'
+  print( 'Ranking models by DOPE score')
   ok_models = [x for x in a.loop.outputs if x['failure'] is None]
   key = 'DOPE score'
   ok_models.sort(key=lambda a: a[key])

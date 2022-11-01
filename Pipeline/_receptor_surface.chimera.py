@@ -8,7 +8,7 @@ import os
 if not os.path.exists(args.pdb_in):
   raise Exception(args.pdb_in+' does not exist')
 
-print 'Processing '+args.pdb_in
+print( 'Processing '+args.pdb_in)
 
 import chimera
 chimera.openModels.open(args.pdb_in)

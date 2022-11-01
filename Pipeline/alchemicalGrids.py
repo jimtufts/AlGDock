@@ -52,7 +52,7 @@ class gridCalculation:
     ### Read header from dx file
     header = {}
     if (self.FNs['header'] is not None) and os.path.isfile(self.FNs['header']):
-      print 'Reading header from '+self.FNs['header']
+      print( 'Reading header from '+self.FNs['header'])
       headerF = open(self.FNs['header'],'r')
       headerData = headerF.read()
       headerF.close()
@@ -68,7 +68,7 @@ class gridCalculation:
 
     # Read binding site parameters
     if (self.FNs['site'] is not None) and os.path.isfile(self.FNs['site']):
-      print 'Reading binding site parameters from '+self.FNs['site']
+      print( 'Reading binding site parameters from '+self.FNs['site'])
       F = open(self.FNs['site'],'r')
       dat = F.read()
       F.close()
@@ -76,7 +76,7 @@ class gridCalculation:
       dat = dat[:dat.find('\n')]
       half_edge_length = float(dat.strip())
       if (spacing is None):
-        print 'Using default spacing of 0.25 A'
+        print( 'Using default spacing of 0.25 A')
         spacing = np.array([0.25, 0.25, 0.25])
       if (counts is None):
         counts = np.array(np.ceil(np.array([ \
@@ -97,37 +97,37 @@ class gridCalculation:
     self.crd = IO_crd.read(self.FNs['inpcrd'])
 
     # Outputs files and parameters
-    print '*** Files and parameters ***'
-    print 'Input AMBER prmtop      :\t' + self.FNs['prmtop']
-    print 'Input AMBER inpcrd      :\t' + self.FNs['inpcrd']
+    print( '*** Files and parameters ***')
+    print( 'Input AMBER prmtop      :\t' + self.FNs['prmtop'])
+    print( 'Input AMBER inpcrd      :\t' + self.FNs['inpcrd'])
     if self.FNs['header'] is not None:
-      print 'Input grid header file  :\t' + self.FNs['header']
+      print( 'Input grid header file  :\t' + self.FNs['header'])
     if self.FNs['site'] is not None:
-      print 'Input binding site info :\t' + self.FNs['site']
-    print 'Output Poisson-Boltzmann:\t' + self.FNs['PB']
-    print 'Output electrostatics   :\t' + self.FNs['ele']
-    print 'Output LJ attractive    :\t' + self.FNs['LJa']
-    print 'Output LJ repulsive     :\t' + self.FNs['LJr']
-    print 'Grid spacing            :\t', spacing
-    print 'Grid counts             :\t', counts
-    print 'PB Grid spacing         :\t', PB_spacing
+      print( 'Input binding site info :\t' + self.FNs['site'])
+    print( 'Output Poisson-Boltzmann:\t' + self.FNs['PB'])
+    print( 'Output electrostatics   :\t' + self.FNs['ele'])
+    print( 'Output LJ attractive    :\t' + self.FNs['LJa'])
+    print( 'Output LJ repulsive     :\t' + self.FNs['LJr'])
+    print( 'Grid spacing            :\t', spacing)
+    print( 'Grid counts             :\t', counts)
+    print( 'PB Grid spacing         :\t', PB_spacing)
     print
 
     if not os.path.isfile(self.FNs['PB']):
       if calcType in ['All','PB']:
-        print 'Calculating Poisson-Boltzmann grid'
+        print( 'Calculating Poisson-Boltzmann grid')
         self.PB_grid(PB_spacing*counts, PB_spacing)
     else:
-      print 'Poisson-Boltzmann grid already calculated'
+      print( 'Poisson-Boltzmann grid already calculated')
     
     if not (os.path.isfile(self.FNs['ele']) and \
             os.path.isfile(self.FNs['LJa']) and \
             os.path.isfile(self.FNs['LJr'])):
       if calcType in ['All','Direct']:
-        print 'Calculating direct alchemical grids'
+        print( 'Calculating direct alchemical grids')
         self.direct_grids(spacing, counts)
     else:
-      print 'Direct alchemical grids already calculated'
+      print( 'Direct alchemical grids already calculated')
 
   def direct_grids(self, spacing, counts, no_ele=True):
     """
@@ -163,7 +163,7 @@ class gridCalculation:
     del i, LJ_index, factor
 
     ### Coordinates of grid points
-    print 'Calculating grid coordinates'
+    print( 'Calculating grid coordinates')
     startTime = time.time()
 
     grid = {}
@@ -178,7 +178,7 @@ class gridCalculation:
           grid['z'][i,j,k] = k*spacing[2]
 
     endTime = time.time()
-    print ' in %3.2f s'%(endTime-startTime)
+    print( ' in %3.2f s'%(endTime-startTime))
 
 ### Calculate ele and Lennard-Jones potential energies at grid points
 # Units: kcal/mol A e
@@ -193,7 +193,7 @@ class gridCalculation:
 # Prefactor is:
 # 1/(4*math.pi*8.85418781762E-12)*(1.60217646E-19**2)/4.184*1E10*6.0221415E+23/1000 = 332.06 kcal/mol A e^2
 
-    print 'Calculating grid potential energies'
+    print( 'Calculating grid potential energies')
     startTime = time.time()
 
     if not no_ele:
@@ -225,10 +225,10 @@ class gridCalculation:
 
       if atom_index%100==0:
         endTime = time.time()
-        print 'Completed atom %d / %d in a total of %3.2f s'%(atom_index,NATOM,endTime-startTime)
+        print( 'Completed atom %d / %d in a total of %3.2f s'%(atom_index,NATOM,endTime-startTime))
 
     endTime = time.time()
-    print '\t%3.2f s'%(endTime-startTime)
+    print( '\t%3.2f s'%(endTime-startTime))
   
     # Cap Lennard-Jones potential energies
     u_max = 10000.0
@@ -238,7 +238,7 @@ class gridCalculation:
     ### Output grids
     import AlGDock.IO
     IO_Grid = AlGDock.IO.Grid()
-    print 'Writing grid output'
+    print( 'Writing grid output')
     if not no_ele:
       IO_Grid.write(self.FNs['ele'], \
         {'origin':np.array([0., 0., 0.]), 'spacing':spacing, 'counts':counts, 'vals':grid['ele'].flatten()})
@@ -305,25 +305,25 @@ class gridCalculation:
     full_dims = roundUpDime((full_max-full_min)/full_spacing)
     full_center = (full_min + full_max)/2.
     
-    print 'There are the grid ranges:'
-    print 'Full'
-    print '  Min',full_min
-    print '  Max',full_max
-    print '  Center',full_center
-    print '  Spacing',full_spacing
-    print '  Points per dimension',full_dims
-    print 'Focus'
-    print '  Min',focus_center - (focus_dims-1)*focus_spacing/2.
-    print '  Max',focus_center + (focus_dims-1)*focus_spacing/2.
-    print '  Center',focus_center
-    print '  Spacing',focus_spacing
-    print '  Points per dimension',focus_dims
-    print 'Final'
-    print '  Min',final_center - (final_dims-1)*final_spacing/2.
-    print '  Max',final_center + (final_dims-1)*final_spacing/2.
-    print '  Center',final_center
-    print '  Spacing',final_spacing
-    print '  Points per dimension',final_dims
+    print( 'There are the grid ranges:')
+    print( 'Full')
+    print( '  Min',full_min)
+    print( '  Max',full_max)
+    print( '  Center',full_center)
+    print( '  Spacing',full_spacing)
+    print( '  Points per dimension',full_dims)
+    print( 'Focus')
+    print( '  Min',focus_center - (focus_dims-1)*focus_spacing/2.)
+    print( '  Max',focus_center + (focus_dims-1)*focus_spacing/2.)
+    print( '  Center',focus_center)
+    print( '  Spacing',focus_spacing)
+    print( '  Points per dimension',focus_dims)
+    print( 'Final')
+    print( '  Min',final_center - (final_dims-1)*final_spacing/2.)
+    print( '  Max',final_center + (final_dims-1)*final_spacing/2.)
+    print( '  Center',final_center)
+    print( '  Spacing',final_spacing)
+    print( '  Points per dimension',final_dims)
     
     # Writes APBS script
     apbsF = open('apbs.in','w')
@@ -373,7 +373,7 @@ END'''.format(self.FNs['pqr'], \
         command_paths = _external_paths.findPaths(['apbs'])
         os.system(command_paths['apbs'] + ' apbs.in > apbs.out')
       except:
-        print 'APBS failure!'
+        print( 'APBS failure!')
         return
         
     # Truncate the grid and convert to kcal/mol
@@ -383,7 +383,7 @@ END'''.format(self.FNs['pqr'], \
     if not os.path.isfile(self.FNs['PB']):
       import AlGDock.IO
       IO_Grid = AlGDock.IO.Grid()
-      print final_dims
+      print( final_dims)
       IO_Grid.truncate('apbs_focus.dx', self.FNs['PB'], \
         final_dims, multiplier=0.596)
 

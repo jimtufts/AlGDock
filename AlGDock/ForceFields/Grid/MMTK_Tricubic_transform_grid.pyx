@@ -1,4 +1,4 @@
-# Implementation of the Tricubic Interpolation Algorith for the AGD Docking
+# Implementation of the Tricubic Interpolation Algorithm for the AGD Docking
 
 # Author: Luis Antonio Leite Francisco da Costa
 
@@ -46,29 +46,29 @@ cdef class TricubicTransformGridTerm(EnergyTerm):
   # name and the universe object.
 
   cdef float_t tricubicInterpolate(list xyz):
-	  fptype x = extract<fptype>(xyz[0]);
-	  fptype y = extract<fptype>(xyz[1]);
-	  fptype z = extract<fptype>(xyz[2]);
+	  cdef fptype x = extract<fptype>(xyz[0])
+	  cdef fptype y = extract<fptype>(xyz[1]);
+	  cdef fptype z = extract<fptype>(xyz[2]);
 	  
-	  fptype dx = fmod(x/_spacing, _n1), dy = fmod(y/_spacing, _n2), dz = fmod(z/_spacing, _n3); //determine the relative position in the box enclosed by nearest data points
+	  cdef fptype dx = fmod(x/_spacing, _n1), dy = fmod(y/_spacing, _n2), dz = fmod(z/_spacing, _n3); #determine the relative position in the box enclosed by nearest data points
 	  
-	  if(dx < 0) dx += _n1; #periodicity is built in
-	  if(dy < 0) dy += _n2;
-	  if(dz < 0) dz += _n3;
+	  if(dx < 0): dx += _n1; #periodicity is built in
+	  if(dy < 0): dy += _n2;
+	  if(dz < 0): dz += _n3;
 	  
-	  int xi = (int)floor(dx); #calculate lower-bound grid index
-	  int yi = (int)floor(dy);
-	  int zi = (int)floor(dz);
+	  cdef int xi = (int)floor(dx); #calculate lower-bound grid index
+	  cdef int yi = (int)floor(dy);
+	  cdef int zi = (int)floor(dz);
 	  
 	  #Numeric derivatives
-	  cdef float_t dfdx[8] = {0.5*(_data[_index(xi+1,yi,zi)]-_data[_index(xi-1,yi,zi)]),
+	  cdef float_t dfdx[8] = 0.5*(_data[_index(xi+1,yi,zi)]-_data[_index(xi-1,yi,zi)]),
 							  0.5*(_data[_index(xi+2,yi,zi)]-_data[_index(xi,yi,zi)]),
 							  0.5*(_data[_index(xi+1,yi+1,zi)]-_data[_index(xi-1,yi+1,zi)]),
 							  0.5*(_data[_index(xi+2,yi+1,zi)]-_data[_index(xi,yi+1,zi)]),
 							  0.5*(_data[_index(xi+1,yi,zi+1)]-_data[_index(xi-1,yi,zi+1)]),
 							  0.5*(_data[_index(xi+2,yi,zi+1)]-_data[_index(xi,yi,zi+1)]),
 							  0.5*(_data[_index(xi+1,yi+1,zi+1)]-_data[_index(xi-1,yi+1,zi+1)]),
-							  0.5*(_data[_index(xi+2,yi+1,zi+1)]-_data[_index(xi,yi+1,zi+1)])};
+							  0.5*(_data[_index(xi+2,yi+1,zi+1)]-_data[_index(xi,yi+1,zi+1)])
 							  
 	  cdef float_t dfdy[8] = {0.5*(_data[_index(xi,yi+1,zi)]-_data[_index(xi,yi-1,zi)]),
 							  0.5*(_data[_index(xi+1,yi+1,zi)]-_data[_index(xi+1,yi-1,zi)]),

@@ -108,10 +108,10 @@ class BPMF:
 
     self._setup()
 
-    print '\n*** Simulation parameters and constants ***'
+    print( '\n*** Simulation parameters and constants ***')
     for p in ['BC', 'CD']:
-      print '\nfor %s:' % p
-      print dictionary_tools.dict_view(self.args.params[p])[:-1]
+      print( '\nfor %s:' % p)
+      print( dictionary_tools.dict_view(self.args.params[p])[:-1])
 
     self.run(kwargs['run_type'])
 
@@ -159,7 +159,7 @@ class BPMF:
         (self.args.params['CD']['site_max_R'],self.args.params['CD']['site_center']) = \
           self.args.params['CD']['site_measured']
       else:
-        print '\n*** Measuring the binding site ***'
+        print( '\n*** Measuring the binding site ***')
         self.system.setParams(
           self.system.paramsFromAlpha(1.0, 'CD', site=False))
         (confs, Es) = self._get_confs_to_rescore(site=False, minimize=True)
@@ -175,7 +175,7 @@ class BPMF:
               coms.append(np.array(self.top.universe.centerOfMass()))
             else:
               break
-          print '  %d configurations fit in the binding site' % len(coms)
+          print( '  %d configurations fit in the binding site' % len(coms))
           coms = np.array(coms)
           center = (np.min(coms, 0) + np.max(coms, 0)) / 2
           max_R = max(
@@ -369,7 +369,7 @@ class BPMF:
       self.render_intermediates(nframes=8, view_args=view_args)
     elif run_type == 'clear_intermediates':
       for process in ['BC', 'CD']:
-        print 'Clearing intermediates for ' + process
+        print( 'Clearing intermediates for ' + process)
         for state_ind in range(1,
                                len(self.data[process].confs['samples']) - 1):
           for cycle_ind in range(
@@ -377,8 +377,8 @@ class BPMF:
             self.data[process].confs['samples'][state_ind][cycle_ind] = []
         self.save(process)
     if run_type is not None:
-      print "\nElapsed time for execution of %s: %s" % (
-        run_type, HMStime(self.log.timeSince('run')))
+      print( "\nElapsed time for execution of %s: %s" % (
+        run_type, HMStime(self.log.timeSince('run'))))
 
   ###########
   # BC #
@@ -1701,7 +1701,7 @@ class BPMF:
                        compute_uncertainty=False)
       except:
         f_k_BAR[k + 1] = f_k_FEPF[k + 1]
-        print 'Error with BAR. Using FEP.'
+        print( 'Error with BAR. Using FEP.')
     f_k_FEPF = np.cumsum(f_k_FEPF)
     f_k_BAR = np.cumsum(f_k_BAR)
     try:
@@ -1715,12 +1715,12 @@ class BPMF:
       f_k_MBAR = f_k_pyMBAR.f_k
       W_nl = f_k_pyMBAR.getWeights()
     except:
-      print N_k, f_k_BAR
+      print( N_k, f_k_BAR)
       f_k_MBAR = f_k_BAR
-      print 'Error with MBAR. Using BAR.'
+      print( 'Error with MBAR. Using BAR.')
     if np.isnan(f_k_MBAR).any():
       f_k_MBAR = f_k_BAR
-      print 'Error with MBAR. Using BAR.'
+      print( 'Error with MBAR. Using BAR.')
     return (f_k_MBAR, W_nl)
 
   def _u_kln(self, eTs, protocol, noBeta=False):
@@ -1881,11 +1881,11 @@ class BPMF:
 
   def __del__(self):
     if (not DEBUG) and len(self.args.toClear) > 0:
-      print "\n>>> Clearing files"
+      print( "\n>>> Clearing files")
       for FN in self.args.toClear:
         if os.path.isfile(FN):
           os.remove(FN)
-          print '  removed ' + os.path.relpath(FN, self.args.dir['start'])
+          print( '  removed ' + os.path.relpath(FN, self.args.dir['start']))
 
 if __name__ == '__main__':
   import argparse

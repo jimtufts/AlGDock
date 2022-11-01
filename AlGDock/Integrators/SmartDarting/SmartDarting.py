@@ -264,17 +264,17 @@ class SmartDartingIntegrator(Dynamics.Integrator):
         (closest_pose_n, distance_n) = self._closest_pose_Cartesian(\
           xn_Cartesian[self.molecule.heavy_atoms,:])
         if (closest_pose_n!=dart_towards):
-          print '    attempted dart from pose %d (%f) to pose %d'%(\
+          print( '    attempted dart from pose %d (%f) to pose %d'%(\
             closest_pose_o,distance_o,dart_towards) + \
-            ' landed near pose %d (%f)!'%(closest_pose_n, distance_n)
+            ' landed near pose %d (%f)!'%(closest_pose_n, distance_n))
           continue
       else:
         (closest_pose_n, distance_n) = self._closest_pose_BAT(\
           xn_BAT[self._BAT_to_perturb])
         if (closest_pose_n!=dart_towards):
-          print '    attempted dart from pose %d (%f) to pose %d'%(\
+          print( '    attempted dart from pose %d (%f) to pose %d'%(\
             closest_pose_o,distance_o,dart_towards) + \
-            ' landed near pose %d (%f)!'%(closest_pose_n, distance_n)
+            ' landed near pose %d (%f)!'%(closest_pose_n, distance_n))
           continue
         xn_Cartesian = self._BAT_util.Cartesian(xn_BAT)
 

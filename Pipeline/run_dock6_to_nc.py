@@ -33,7 +33,7 @@ for FN in FNs:
   ncommands = len(command_list)
   if ncommands==args.job_block or ((ncommands>0) and (FN==FNs[-1])):
     command = '; '.join(command_list)
-    print command
+    print( command)
     os.system(' '.join(['python',command_paths['qsub_command'],\
         'dock6_to_nc', "'"+command+"'", \
         '--input_files', dock6_to_nc_script, ' '.join(FNs_c) + \

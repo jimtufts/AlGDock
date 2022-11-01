@@ -14,7 +14,7 @@ if not os.path.isfile(pdball_FN):
   pdball_FN = sys.argv[-1]
   if not os.path.isfile(pdball_FN):
     raise Exception('PDB sequences not found in %s!'%pdball_FN)
-print 'Reading PDB sequences from '+pdball_FN
+print( 'Reading PDB sequences from '+pdball_FN)
 
 sdb = modeller.sequence_db(env)
 sdb.read(seq_database_file=pdball_FN, seq_database_format='BINARY',

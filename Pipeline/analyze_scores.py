@@ -54,7 +54,7 @@ if os.path.isfile(dock6_scores_FN):
   scores['dock6'] = pickle.load(F)
   F.close()
 else:
-  print 'Parsing dock6 scores...'
+  print( 'Parsing dock6 scores...')
   nc_FNs = glob.glob(os.path.join(args.dock6,'*/*/*.nc'))
   nc_FNs = [FN for FN in nc_FNs if os.path.getsize(FN)>0]
   for nc_FN in nc_FNs:
@@ -89,7 +89,7 @@ else:
   f_RL_FNs = [FN for FN in glob.glob(os.path.join(\
     args.AlGDock,'*','*','*','f_RL.pkl.gz')) if os.path.getsize(FN)>0]
   for f_RL_FN in f_RL_FNs:
-    print 'Reading AlGDock scores from '+f_RL_FN
+    print( 'Reading AlGDock scores from '+f_RL_FN)
     (lib_subdir,key,receptor_rep) = os.path.dirname(\
       f_RL_FN[len(args.AlGDock):]).split('/')
     library = '.'.join(lib_subdir.split('.')[:-1])
@@ -117,9 +117,9 @@ for FF in show['FF'].keys():
     scores[FF] = {}
 
 # Counts
-print '\nNumber of scores'
+print( '\nNumber of scores')
 for FF in scores.keys():
-  print '%30s: %d'%(FF, len(scores[FF]))
+  print( '%30s: %d'%(FF, len(scores[FF])))
 
 # Collections are groups of ligands that can be contrasted in ROC plots
 collections = {}
@@ -133,7 +133,7 @@ for library_type in ['active','inactive','decoy']:
 # TODO: Read in other collections
 
 # Histograms for each force field
-print '\nPlotting histograms:'
+print( '\nPlotting histograms:')
 import matplotlib.pyplot as plt
 
 for FF in show['FF'].keys():
@@ -149,7 +149,7 @@ for FF in show['FF'].keys():
           hist_scores.append(scores_FF)
           hist_legend.append(show['lib'][lib])
       if len(hist_scores)>0:
-        print '  writing to '+hist_FN
+        print( '  writing to '+hist_FN)
         plt.clf()
         plt.hist(hist_scores)
         plt.title('Histogram of %s %s scores'%(range_name,show['FF'][FF]))

@@ -353,7 +353,7 @@ if execute_script!='':
   sh_F.close()
 
 if (not args.dry) and cluster in ['OSG','CCB','Bridges','Comet']:
-  print 'Submitting job script: ' + submit_FN
+  print( 'Submitting job script: ' + submit_FN)
 
 print('Job name: ' + args.name)
 

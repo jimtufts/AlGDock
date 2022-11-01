@@ -30,9 +30,9 @@ if len(selected_seq_identities)>0:
   plt.ylabel('Number of Structures')
   plt.savefig('figures/hist_seq_id_selected.png')
 
-print '%d selected chains'%len(selected_seq_identities)
-print 'with minimum sequence identity of %d'%min_seq_identity
-print 'and at least %d equivalent positions'%min_equivalent_positions
+print( '%d selected chains'%len(selected_seq_identities))
+print( 'with minimum sequence identity of %d'%min_seq_identity)
+print( 'and at least %d equivalent positions'%min_equivalent_positions)
 
 # Sort sequences by
 # 1. Sequence Identity
@@ -48,4 +48,4 @@ inds = inds[np.logical_and(\
   equivalent_positions[inds]>=min_equivalent_positions)]
 
 prof_list = profile.items()
-print '\n'.join(['{0[0][0]} {0[0][1]} {0[1][2]} {0[1][1]} {0[1][3]}'.format(prof_list[ind]) for ind in inds[::-1]])
+print( '\n'.join(['{0[0][0]} {0[0][1]} {0[1][2]} {0[1][1]} {0[1][3]}'.format(prof_list[ind]) for ind in inds[::-1]]))

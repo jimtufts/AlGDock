@@ -289,8 +289,8 @@ sim_arg_keys = general_sim_arg_keys + \
 
 # Load saved arguments
 if (args_in.saved_arguments is not None) and nonzero(args_in.saved_arguments):
-  print 'Passed arguments:'
-  print 'Loading default simulation arguments from '+args_in.saved_arguments
+  print( 'Passed arguments:')
+  print( 'Loading default simulation arguments from '+args_in.saved_arguments)
   execfile(args_in.saved_arguments)
   for key in sim_arg_keys:
     if hasattr(args_saved,key) and \
@@ -301,11 +301,11 @@ else:
     pass
 
 # Report arguments in args_in that are not listed in sim_arg_keys
-print "\nThese arguments will not be passed to AlGDock:"
+print( "\nThese arguments will not be passed to AlGDock:")
 for key in args_in.__dict__.keys():
   if key not in sim_arg_keys and getattr(args_in,key) is not None:
-    print '{0}={1}'.format(key,getattr(args_in,key))
-print
+    print( '{0}={1}'.format(key,getattr(args_in,key)))
+print()
 
 # Determine the binding site radius and half edge length
 site = args_in.site
@@ -320,7 +320,7 @@ else:
     site_center = [half_edge_length*0.1, half_edge_length*0.1, half_edge_length*0.1]
     site_max_R = site_R/10.
   else:
-    print 'No binding site information'
+    print( 'No binding site information')
 
 # Look for ligand files
 if isfile(args_in.ligand):
@@ -347,7 +347,7 @@ if len(ligand_FNs)>1:
     import sys
     for ligand_FN in ligand_FNs:
       command = ' '.join(sys.argv + ['--ligand',ligand_FN]) + ' &'
-      print command
+      print( command)
       os.system(command)
     sys.exit()
 # Sort ligands in reverse order by size. This way,
@@ -394,13 +394,13 @@ else:
 # Require that complex tarball has nonzero size
 complex_FNs = [FN for FN in complex_FNs if nonzero(FN)]
 
-print 'Found %d ligands, %d receptors, and %d complexes ready for AlGDock'%(\
-  len(ligand_FNs),len(receptor_FNs),len(complex_FNs))
+print( 'Found %d ligands, %d receptors, and %d complexes ready for AlGDock'%(\
+  len(ligand_FNs),len(receptor_FNs),len(complex_FNs)))
 
 if (args_in.library_requirement is not None):
   ligand_FNs = [FN for FN in ligand_FNs \
     if FN.find(args_in.library_requirement)>-1]
-  print '%d ligand(s) meet the library requirement'%(len(ligand_FNs))
+  print( '%d ligand(s) meet the library requirement'%(len(ligand_FNs)))
 
 if args_in.reps is None:
   args_in.reps = [0,1]
@@ -409,8 +409,8 @@ if args_in.first_ligand is None:
 if args_in.max_ligands is None:
   args_in.max_ligands = len(ligand_FNs)
 
-print 'Arguments:'
-print args_in
+print( 'Arguments:')
+print( args_in)
 
 namespace = locals()
 
@@ -447,8 +447,8 @@ for ligand_FN in ligand_FNs[args_in.first_ligand:args_in.first_ligand+args_in.ma
     not_found = [paths_in_tar[key] for key in paths_in_tar.keys() \
       if not paths_in_tar[key] in names]
     if len(not_found)>0:
-      print 'The following files were missing in '+ligand_FN+':'
-      print ' '.join(not_found)
+      print( 'The following files were missing in '+ligand_FN+':')
+      print( ' '.join(not_found))
       continue
     else:
       checked.append(ligand_FN)
@@ -493,7 +493,7 @@ for ligand_FN in ligand_FNs[args_in.first_ligand:args_in.first_ligand+args_in.ma
           '{0}.{1}-{2}.tar.gz'.format(\
             labels['library'],labels['key'],labels['receptor']))
         if not (isfile(complex_tar_FN)):
-          print 'No complex tarfile ' + complex_tar_FN
+          print( 'No complex tarfile ' + complex_tar_FN)
           status['no_complex'] += 1
           continue # Complex files are missing
       paths['complex_tarball'] = complex_tar_FN
@@ -519,8 +519,8 @@ for ligand_FN in ligand_FNs[args_in.first_ligand:args_in.first_ligand+args_in.ma
         not_found = [paths_in_tar[key] for key in paths_in_tar.keys() \
           if key.startswith('complex') and not paths_in_tar[key] in names]
         if len(not_found)>0:
-          print 'The following files were missing in '+complex_tar_FN+':'
-          print ' '.join(not_found)
+          print( 'The following files were missing in '+complex_tar_FN+':')
+          print( ' '.join(not_found))
           continue
         else:
           checked.append(complex_tar_FN)
@@ -528,9 +528,9 @@ for ligand_FN in ligand_FNs[args_in.first_ligand:args_in.first_ligand+args_in.ma
       input_FNs = paths.values()
       input_FNs_missing = np.array([not nonzero(FN) for FN in input_FNs])
       if input_FNs_missing.any():
-        print 'Necessary files:'
-        print paths
-        print 'Files are missing: ' + ', '.join(np.array(input_FNs)[input_FNs_missing])
+        print( 'Necessary files:')
+        print( paths)
+        print( 'Files are missing: ' + ', '.join(np.array(input_FNs)[input_FNs_missing]))
         status['missing_file'] += 1
         continue # Files are missing
 
@@ -549,7 +549,7 @@ for ligand_FN in ligand_FNs[args_in.first_ligand:args_in.first_ligand+args_in.ma
             skip_job = True
             break # No configurations in dock6
           else:
-            print 'No dock6 output in '+args_in.score
+            print( 'No dock6 output in '+args_in.score)
             status['no_dock6'] += 1
             skip_job = True
             break # Dock6 files are missing
@@ -577,7 +577,7 @@ for ligand_FN in ligand_FNs[args_in.first_ligand:args_in.first_ligand+args_in.ma
           for phase in args_in.phases:
             for moeity in ['R','L','RL']:
               if moeity+phase not in Es.keys():
-                print '{0} is missing {1}'.format(score, moeity+phase)
+                print( '{0} is missing {1}'.format(score, moeity+phase))
                 complete = False
         # Pose energy is done
         if complete:
@@ -591,7 +591,7 @@ for ligand_FN in ligand_FNs[args_in.first_ligand:args_in.first_ligand+args_in.ma
         try:
           poses_in_mdcrd = 'poses.mdcrd' in tarF.getnames()
         except IOError:
-          print 'Error with '+complex_tar_FN
+          print( 'Error with '+complex_tar_FN)
           import sys
           sys.exit()
         if poses_in_mdcrd:
@@ -629,15 +629,15 @@ for ligand_FN in ligand_FNs[args_in.first_ligand:args_in.first_ligand+args_in.ma
                 completed_cycles = np.min([len(dat[-1][p+'_MBAR']) for p in args_in.phases])
                 complete = (completed_cycles >= int(args_in.dock_repX_cycles))
               except:
-                print 'Error in '+f_RL_FN
+                print( 'Error in '+f_RL_FN)
                 completed_cycles = 0
                 complete = False
               if complete:
                 status['complete'] += 1 # Docking is done
                 continue
               else:
-                print '%d/%d cycles in %s'%(\
-                  completed_cycles, args_in.dock_repX_cycles, paths['dir_dock'])
+                print( '%d/%d cycles in %s'%(\
+                  completed_cycles, args_in.dock_repX_cycles, paths['dir_dock']))
             else:
                 status['complete'] += 1 # Docking is done
                 continue
@@ -651,18 +651,18 @@ for ligand_FN in ligand_FNs[args_in.first_ligand:args_in.first_ligand+args_in.ma
           rep, pose_string, args_in.run_type)
         if jobname in onq:
           status['onq'] += 1
-          print jobname + ' is on the queue'
+          print( jobname + ' is on the queue')
           continue # Job is on the queue
 
         if args_in.clear_locks:
           if not (jobname in onq):
             if exists(join(paths['dir_cool'],'.lock')):
               # There is a lock in the cooling directory
-              print '# Removing lock in cooling directory %s'%(paths['dir_cool'])
+              print( '# Removing lock in cooling directory %s'%(paths['dir_cool']))
               os.remove(join(paths['dir_cool'],'.lock'))
             if exists(join(paths['dir_dock'],'.lock'+pose_string)):
               # There is a lock in the docking directory
-              print '# Removing lock in docking directory %s'%(paths['dir_dock'])
+              print( '# Removing lock in docking directory %s'%(paths['dir_dock']))
               os.remove(join(paths['dir_dock'],'.lock'+pose_string))
 
         # Consolidate paths to pass
@@ -720,7 +720,7 @@ for ligand_FN in ligand_FNs[args_in.first_ligand:args_in.first_ligand+args_in.ma
               terminal_to_pass.append("--%s %s"%(key,
                 " ".join(['%.5f'%a for a in val])))
           else:
-            print 'Value:', val
+            print( 'Value:', val)
             raise Exception('Type not known!')
 
         if skip_job:
@@ -759,7 +759,7 @@ for ligand_FN in ligand_FNs[args_in.first_ligand:args_in.first_ligand+args_in.ma
         terminal_command += ' \\\n  '.join(terminal_to_pass)
 
         if args_in.interactive:
-          print interactive_command
+          print( interactive_command)
         else:
           import subprocess
           if args_in.calcs_per_job > 1:
@@ -819,4 +819,4 @@ format_str = "Calculation status: {jobs} jobs, {submitted} submitted, " + \
   "{no_configurations} have no docked configurations, " + \
   "{missing_file} missing other files, {onq} on the queue, " + \
   "{recently_redone} recently redone, {complete} complete"
-print format_str.format(**status)
+print( format_str.format(**status))

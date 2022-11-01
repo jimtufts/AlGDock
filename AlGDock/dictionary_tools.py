@@ -35,9 +35,9 @@ def merge_dictionaries(dicts, required_consistency=[]):
               inconsistent_items = (dicts[b][key] != dicts[a][key])
             if inconsistent_items:
               if key in required_consistency:
-                print 'Dictionary items for %s are inconsistent:' % key
-                print dicts[a][key]
-                print dicts[b][key]
+                print( 'Dictionary items for %s are inconsistent:' % key)
+                print( dicts[a][key])
+                print( dicts[b][key])
                 raise Exception('Items must be consistent!')
       elif (merged[key] is None):  # Replace None
         merged[key] = dicts[a][key]

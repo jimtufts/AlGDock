@@ -1,7 +1,7 @@
-AlGDock
+AlGDock3
 =======
 
-Molecular docking with Alchemical Interaction Grids
+Molecular docking with Alchemical Interaction Grids using Python 3
 
 v1.0.0 
 

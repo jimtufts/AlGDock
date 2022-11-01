@@ -72,7 +72,7 @@ if args.UseOpenEye=='Y' and not step_complete(charged_FN):
       atom.SetImplicitHCount(0)
   else:
     if not oequacpac.OEGetReasonableProtomer(mol):
-      print 'Failed to get a reasonable protomer at pH 7.4'
+      print( 'Failed to get a reasonable protomer at pH 7.4')
 
   oechem.OEAssignAromaticFlags(mol, oechem.OEAroModelOpenEye)
 
@@ -80,7 +80,7 @@ if args.UseOpenEye=='Y' and not step_complete(charged_FN):
     oechem.OEAddExplicitHydrogens(mol)
 
   smi = oechem.OECreateSmiString(mol, oechem.OESMILESFlag_Canonical)
-  print 'The canonical SMILES for a reasonably protonated state is', smi
+  print( 'The canonical SMILES for a reasonably protonated state is', smi)
 
   # Generate conformations
   from openeye import oeomega
@@ -124,7 +124,7 @@ if args.UseOpenEye=='Y' and not step_complete(charged_FN):
     ofs.close()
   else:
     # Conformer generation failed. Use Ballon + Chimera
-    print 'Conformer generation with OETools failed.'
+    print( 'Conformer generation with OETools failed.')
 
 if (args.UseOpenEye=='N') or not step_complete(charged_FN):
   if not step_complete(balloon_FN):
@@ -135,7 +135,7 @@ if (args.UseOpenEye=='N') or not step_complete(charged_FN):
       os.system(command)
 
   if os.path.isfile(os.path.basename(balloon_FN)[:-5]+'_bad.mol2'):
-    print 'Conformer generation failed!'
+    print( 'Conformer generation failed!')
     # Make the final out_prefixut an empty file
     open(sybyl_FN, 'a').close()
 
@@ -146,7 +146,7 @@ if (args.UseOpenEye=='N') or not step_complete(charged_FN):
     F.close()
 
     if mol2.count("@<TRIPOS>MOLECULE")>1:
-      print 'Keeping first configuration in '+balloon_FN
+      print( 'Keeping first configuration in '+balloon_FN)
       confs = mol2.strip().split("@<TRIPOS>MOLECULE")
       if confs[0]=='':
         confs.pop(0)
@@ -169,7 +169,7 @@ if (args.UseOpenEye=='N') or not step_complete(charged_FN):
       else:
         charge -= 1
     lc = c
-  print 'Net charge is ', charge
+  print( 'Net charge is ', charge)
 
   if not step_complete(charged_FN):
     # Run chimera to get AM1BCC charges

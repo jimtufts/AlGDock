@@ -4,6 +4,7 @@ Ideas that were tested and appeared unsuccessful.
 The code is not being maintained but is kept in case they are resurrected.
 """
 
+"""
   def targeted_FEP(self):
     start_string = "\n>>> Targeted FEP calculations, starting at " + \
       time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime()) + "\n"
@@ -168,3 +169,4 @@ The code is not being maintained but is kept in case they are resurrected.
     self.log.tee(write_pkl_gz(f_RL_FN, (self.f_L, self.stats_RL, self.f_RL, self.B)))
     self.log.tee("\nElapsed time for targeted FEP: " + \
       HMStime(time.time()-self.log.start_times['targeted_FEP']))
+"""

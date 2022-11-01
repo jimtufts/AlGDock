@@ -45,9 +45,9 @@ for line in lines:
       ninactive += 1
       ligands += 1
   else:
-    print 'Not enough fields!'
-    print line
-    print len(fields)
+    print( 'Not enough fields!')
+    print( line)
+    print( len(fields))
 
 activeF.close()
 inactiveF.close()

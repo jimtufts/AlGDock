@@ -67,7 +67,7 @@ def findPaths(keys):
         else:
           import time
           download_start_time = time.time()
-          print 'Downloading and installing '+key
+          print( 'Downloading and installing '+key)
           os.system('wget --no-verbose --no-check-certificate ' + \
             'http://stash.osgconnect.net/+daveminh/%s'%(FN))
           if not os.path.isfile(FN):
@@ -76,11 +76,11 @@ def findPaths(keys):
           if command != '':
             os.system(command)
           if os.path.isfile(path):
-            print '  ' + key + ' downloaded and installed in %f s'%(\
-              time.time() - download_start_time)
+            print( '  ' + key + ' downloaded and installed in %f s'%(\
+              time.time() - download_start_time))
             paths[key] = os.path.abspath(path)
           else:
-            print 'Could not download '+key
+            print( 'Could not download '+key)
             raise Exception('Could not download '+key)
       else:
         raise Exception('Missing file for '+key)

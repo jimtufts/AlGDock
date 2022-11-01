@@ -70,28 +70,28 @@ def loopISM(ism_FNs, search_strings, field_width, nonzero=True):
 start_dir = os.getcwd()
 if args.multi_target:
   dirs = sorted([d for d in glob.glob('*') if os.path.isdir(d)])
-  print 'Parsing multiple targets'
+  print( 'Parsing multiple targets')
 else:
   dirs = ['.']
 
 for dir in dirs:
   os.chdir(dir)
 
-  print '-'*20
-  print os.getcwd()
+  print( '-'*20)
+  print( os.getcwd())
   
   nligands_all = 0
   nligands_dock = 0
   nligands_AlGDock = 0
   ism_FNs = glob.glob('ligand/*.ism')
   if ism_FNs==[]:
-    print 'No ligands found for '+dir
+    print( 'No ligands found for '+dir)
     os.chdir('..')
     continue
 
-  print "\nLigands"
+  print( "\nLigands")
   first_field_width = int(np.max([len(ism_FN[:-4]) for ism_FN in ism_FNs]))
-  print ' '*first_field_width+"\tSMILES\tDock\tAlGDock"
+  print( ' '*first_field_width+"\tSMILES\tDock\tAlGDock")
   for ism_FN in ism_FNs:
     prefix = os.path.basename(ism_FN)[:-4]
     ism_nligands_all = countLines(ism_FN)
@@ -100,45 +100,45 @@ for dir in dirs:
     nligands_all += ism_nligands_all
     nligands_dock += ism_nligands_dock
     nligands_AlGDock += ism_nligands_AlGDock
-    print '%*s\t%d\t%d\t%d'%(first_field_width,\
-      prefix,ism_nligands_all,ism_nligands_dock,ism_nligands_AlGDock)
-  print '%*s\t%d\t%d\t%d'%(first_field_width,\
-    'Total',nligands_all,nligands_dock,nligands_AlGDock)
+    print( '%*s\t%d\t%d\t%d'%(first_field_width,\
+      prefix,ism_nligands_all,ism_nligands_dock,ism_nligands_AlGDock))
+  print( '%*s\t%d\t%d\t%d'%(first_field_width,\
+    'Total',nligands_all,nligands_dock,nligands_AlGDock))
 
-  print "\nReceptors"
-  print "\tHomology  ", numfiles('receptor/3-models/pdb_noH/*.pdb')
-  print "\tDock      ", numfiles('receptor/dock_in/*.sph')
+  print( "\nReceptors")
+  print( "\tHomology  ", numfiles('receptor/3-models/pdb_noH/*.pdb'))
+  print( "\tDock      ", numfiles('receptor/dock_in/*.sph'))
   nonoverlap = FN_in_first_not_second('receptor/3-models/pdb_noH/*.pdb', \
                                    'receptor/dock_in/*.sph')
   if len(nonoverlap)>0:
-    print '  in homology but not dock: ' + ', '.join(nonoverlap)
-  print "\tAMBER     ", numfiles('receptor/amber_in/*.prmtop')
+    print( '  in homology but not dock: ' + ', '.join(nonoverlap))
+  print( "\tAMBER     ", numfiles('receptor/amber_in/*.prmtop'))
   nonoverlap = FN_in_first_not_second('receptor/3-models/pdb_noH/*.pdb', \
                                    'receptor/amber_in/*.prmtop')
   if len(nonoverlap)>0:
-    print '  in homology but not AMBER: ' + ', '.join(nonoverlap)
-  print "\tAlGDock   ", numfiles('receptor/AlGDock_in/*.PB.nc')
+    print( '  in homology but not AMBER: ' + ', '.join(nonoverlap))
+  print( "\tAlGDock   ", numfiles('receptor/AlGDock_in/*.PB.nc'))
   nonoverlap = FN_in_first_not_second('receptor/3-models/pdb_noH/*.pdb', \
                                    'receptor/AlGDock_in/*.PB.nc')
   if len(nonoverlap)>0:
-    print '  in homology but not AlGDock: ' + ', '.join(nonoverlap)
+    print( '  in homology but not AlGDock: ' + ', '.join(nonoverlap))
 
-  print "\nComplexes for AlGDock"
-  print loopISM(ism_FNs, ['complex/AlGDock_in/%s*/*/*.tar.gz'], \
-    first_field_width)
+  print( "\nComplexes for AlGDock")
+  print( loopISM(ism_FNs, ['complex/AlGDock_in/%s*/*/*.tar.gz'], \
+    first_field_width))
 
-  print "\nCompleted Calculations"
-  print "for dock (*.mol2.gz)"
-  print loopISM(ism_FNs, ['dock6/%s*/*/*.mol2.gz'], first_field_width, \
-    nonzero=False)
-  print "for dock (*.nc)"
-  print loopISM(ism_FNs, ['dock6/%s*/*/*.nc'], first_field_width)
-  print "for dock (all)"
-  print loopISM(ism_FNs, ['dock6/%s*/*/*.mol2.gz', 'dock6/%s*/*/*.nc'], first_field_width, nonzero=False)
+  print( "\nCompleted Calculations")
+  print( "for dock (*.mol2.gz)")
+  print( loopISM(ism_FNs, ['dock6/%s*/*/*.mol2.gz'], first_field_width, \
+    nonzero=False))
+  print( "for dock (*.nc)")
+  print( loopISM(ism_FNs, ['dock6/%s*/*/*.nc'], first_field_width))
+  print( "for dock (all)")
+  print( loopISM(ism_FNs, ['dock6/%s*/*/*.mol2.gz', 'dock6/%s*/*/*.nc'], first_field_width, nonzero=False))
 
-  print "for AlGDock"
-  print loopISM(ism_FNs, ['AlGDock/dock/%s*/*/*/f_RL.pkl.gz'], \
-    first_field_width)
+  print( "for AlGDock")
+  print( loopISM(ism_FNs, ['AlGDock/dock/%s*/*/*/f_RL.pkl.gz'], \
+    first_field_width))
 
   if args.clean_dock_not_complex:
     (complex_not_dock,dock_not_complex) = complex_nonoverlap(['complex/AlGDock_in/*/*/*.tar.gz'], ['dock6/*/*/*.mol2.gz', 'dock6/*/*/*.nc'])

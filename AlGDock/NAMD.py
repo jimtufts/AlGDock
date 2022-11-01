@@ -28,9 +28,9 @@ except:
       if location is not None and os.path.exists(location):
         return os.path.abspath(location)
     if not locations == [None]:
-      print 'File not found!'
-      print 'Searched:'
-      print locations
+      print( 'File not found!')
+      print( 'Searched:')
+      print( locations)
     return None
 
   # Define search paths for external programs
@@ -345,7 +345,7 @@ class NAMD:
       try:
         data = pickle.load(F)
       except:
-        print '  error loading ' + FN
+        print( '  error loading ' + FN)
         F.close()
         return None
       F.close()
@@ -358,7 +358,7 @@ class NAMD:
     F = gzip.open(FN, 'w')
     pickle.dump(data, F)
     F.close()
-    print "  wrote to " + FN
+    print( "  wrote to " + FN)
 
   def _removeFile(self, filename):
     """
@@ -616,16 +616,16 @@ binaryoutput         yes
         # End NAMD if there is an error
         if line.find('ERROR:') > -1:
           if line.find('velocity') > -1:
-            print 'Atoms moving too fast'
+            print( 'Atoms moving too fast')
             break
           else:
-            print line
+            print( line)
             noRunError = False
             raise Exception('Error in NAMD')
           try:
             proc.kill()  # After python 2.6
           except AttributeError:
-            print 'NAMD not killed.'
+            print( 'NAMD not killed.')
         # If there is a time limit, end NAMD is there is insufficient time to complete the instance
         if (not self.finishBy == None) and (not totalSteps == None):
           #          if (line.find('ENERGY:')==0) or (line.find('Benchmark time')>-1):
@@ -639,19 +639,19 @@ binaryoutput         yes
           if line.find('Benchmark time') > -1:
             timePerStep = float(line[line.find('CPUs') +
                                      4:line.find('s/step')])
-            print 'Benchmark rate of %.7f s/step' % timePerStep
+            print( 'Benchmark rate of %.7f s/step' % timePerStep)
             projectedCompletion = (totalSteps - elapsedTimeSteps) * timePerStep
             remainingTime = self.finishBy - time.time()
-            print 'Projected completion in %3.2f s. %3.2f s remaining.' % (
-              projectedCompletion, remainingTime)
+            print( 'Projected completion in %3.2f s. %3.2f s remaining.' % (
+              projectedCompletion, remainingTime))
             if projectedCompletion > remainingTime:
-              print 'Insufficient time remaining for cycle.'
+              print( 'Insufficient time remaining for cycle.')
               outF.write('Insufficient time remaining for cycle.\n')
               noRunError = False
               try:
                 proc.kill()  # After python 2.6.  Will raise error otherwise.
               except:
-                print 'NAMD not terminated normally.'
+                print( 'NAMD not terminated normally.')
                 sys.exit()
       if noRunError:
         proc.wait()  # Let NAMD finish
@@ -670,7 +670,7 @@ binaryoutput         yes
                                      integrator_script, output_script,
                                      execution_script, grid_script)
             retry_string = retry_string + ' with a random number seed of %d' % self.seed
-          print retry_string
+          print( retry_string)
         elif attempts <= 10:
           retry_string = 'Retrying'
           attempts_ts = attempts - 5
@@ -692,9 +692,9 @@ binaryoutput         yes
                                    new_execution_script)
           retry_string = retry_string + ' and a time step of %.4f' % (
             original['timestep'] / attempts_ts)
-          print retry_string
+          print( retry_string)
         else:
-          print 'Too many attempts!'
+          print( 'Too many attempts!')
           noRunError = False
 
     # Clean up

@@ -105,7 +105,7 @@ class Logger:
     process : str
       Process, either 'BC' or 'CD' or None
     """
-    print var
+    print( var)
     if hasattr(self, 'log'):
       if isinstance(var, str):
         self.log.write(var + '\n')

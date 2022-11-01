@@ -65,7 +65,7 @@ class SimulationArguments:
       self.cores = availablecores
     else:
       self.cores = min(kwargs['cores'], availablecores)
-    print "using %d/%d available cores" % (self.cores, availablecores)
+    print("using %d/%d available cores" % (self.cores, availablecores))
 
     if kwargs['rotate_matrix'] is not None:
       self._view_args_rotate_matrix = kwargs['rotate_matrix']
@@ -74,7 +74,7 @@ class SimulationArguments:
       self.random_seed = 0
     else:
       self.random_seed = kwargs['random_seed']
-      print 'using random number seed of %d' % self.random_seed
+      print('using random number seed of %d' % self.random_seed)
 
     self.dir = {}
     self.dir['start'] = os.getcwd()
@@ -108,8 +108,8 @@ class SimulationArguments:
         FNs[p] = OrderedDict()
         args[p] = OrderedDict()
 
-    print '\n*** Directories ***'
-    print dictionary_tools.dict_view(self.dir)
+    print('\n*** Directories ***')
+    print(dictionary_tools.dict_view(self.dir))
 
     # Identify tarballs
     tarFNs = [kwargs[prefix + '_tarball'] \
@@ -152,7 +152,7 @@ class SimulationArguments:
       (not os.path.isfile(kwargs['frcmodList'][0]))
 
     if kwargs['keep_tar']:
-      print 'Files extracted from tarballs will be kept\n'
+      print('Files extracted from tarballs will be kept\n')
 
     # Decompress tarballs into self.dir['CD']
     self.toClear = []
@@ -160,13 +160,13 @@ class SimulationArguments:
     if len(seekFNs) > 0:
       import tarfile
 
-      print ">>> Decompressing tarballs"
-      print 'looking for:\n  ' + '\n  '.join(seekFNs)
+      print(">>> Decompressing tarballs")
+      print( 'looking for:\n  ' + '\n  '.join(seekFNs))
       if seek_frcmod:
-        print '  and frcmod files'
+        print( '  and frcmod files')
 
       for tarFN in tarFNs:
-        print 'reading ' + tarFN
+        print( 'reading ' + tarFN)
         tarF = tarfile.open(tarFN, 'r')
         for member in tarF.getmembers():
           for seekFN in seekFNs:
@@ -174,7 +174,7 @@ class SimulationArguments:
               tarF.extract(member, path=self.dir['CD'])
               if not kwargs['keep_tar']:
                 self.toClear.append(os.path.join(self.dir['CD'], seekFN))
-              print '  extracted ' + seekFN
+              print( '  extracted ' + seekFN)
           if seek_frcmod and member.name.endswith('frcmod'):
             FN = os.path.abspath(os.path.join(self.dir['CD'], member.name))
             if not os.path.isfile(FN):
@@ -182,20 +182,20 @@ class SimulationArguments:
               kwargs['frcmodList'] = [FN]
               if not kwargs['keep_tar']:
                 self.toClear.append(FN)
-              print '  extracted ' + FN
-      print
+              print( '  extracted ' + FN)
+      print()
 
     # Set up file name dictionary
-    print '*** Files ***'
+    print( '*** Files ***')
 
     for p in ['BC', 'CD']:
       if p in FNs.keys():
         if FNs[p] != {}:
-          print 'previously stored in %s directory:' % p
-          print dictionary_tools.dict_view(FNs[p], relpath=self.dir['start'])
+          print( 'previously stored in %s directory:' % p)
+          print( dictionary_tools.dict_view(FNs[p], relpath=self.dir['start']))
 
     if not (FNs['BC'] == {} and FNs['CD'] == {}):
-      print 'from arguments and defaults:'
+      print( 'from arguments and defaults:')
 
     def cdir_or_dir_CD(FN):
       if FN is not None:
@@ -266,8 +266,8 @@ class SimulationArguments:
       ('dir_BC',self.dir['BC'])])
 
     if not (FNs['BC'] == {} and FNs['CD'] == {}):
-      print dictionary_tools.dict_view(FNs['new'], relpath=self.dir['start'])
-      print 'to be used:'
+      print( dictionary_tools.dict_view(FNs['new'], relpath=self.dir['start']))
+      print( 'to be used:')
 
     self.FNs = dictionary_tools.merge_dictionaries(
       [FNs[src] for src in ['new', 'BC', 'CD']])
@@ -312,18 +312,18 @@ class SimulationArguments:
         if do_CD:
           raise Exception(errstring)
         else:
-          print errstring
+          print( errstring)
 
     if ((self.FNs['inpcrd']['RL'] is None) and \
         (self.FNs['inpcrd']['R'] is None)):
       if do_CD:
         raise Exception('Receptor coordinates needed for CD!')
       else:
-        print 'Receptor coordinates needed for CD!'
+        print( 'Receptor coordinates needed for CD!')
 
-    print dictionary_tools.dict_view(self.FNs,
+    print( dictionary_tools.dict_view(self.FNs,
                                      relpath=self.dir['start'],
-                                     show_None=True)
+                                     show_None=True))
 
     args['default_BC'] = OrderedDict([
       ('protocol', 'Adaptive'), ('therm_speed', 30.0), ('T_HIGH', 600.),
@@ -404,10 +404,10 @@ class SimulationArguments:
       else:
         self.original_Es[0][0]['R' + phase] = None
 
-    print '\n*** Simulation parameters and constants ***'
+    print( '\n*** Simulation parameters and constants ***')
     for p in ['BC', 'CD']:
-      print '\nfor %s:' % p
-      print dictionary_tools.dict_view(self.params[p])[:-1]
+      print( '\nfor %s:' % p)
+      print( dictionary_tools.dict_view(self.params[p])[:-1])
 
   def load_pkl_gz(self, p, pose):
     """Loads parameters from a pickled gzip file
@@ -431,9 +431,9 @@ class SimulationArguments:
 
       saved = load_pkl_gz(progress_FN)
       if (saved is None):
-        print '  no progress information for %s' % p
+        print( '  no progress information for %s' % p)
       else:
-        print '  using stored progress and data in %s' % p
+        print( '  using stored progress and data in %s' % p)
     # self._clear(p)
 
     params = None

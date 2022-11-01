@@ -39,22 +39,22 @@ if not os.path.isdir(dirs['temp']):
 os.chdir(dirs['temp'])
 
 if not os.path.isfile(prefix+'.mol2'):
-  print '\n*** Writing mol2 file with amber atom types ***'
+  print( '\n*** Writing mol2 file with amber atom types ***')
   command = dirs['amber']+'/bin/antechamber' + \
     ' -i {0} -fi mol2 -o {1}.mol2 -fo mol2 -rn {1}'.format(\
       args.in_FN, prefix)
   os.system(command)
-  print 'Wrote {0}.mol2'.format(prefix)
+  print( 'Wrote {0}.mol2'.format(prefix))
 
 if not os.path.isfile(prefix+'.frcmod'):
-  print '\n*** Generating frcmod file ***'
+  print( '\n*** Generating frcmod file ***')
   command = dirs['amber']+'/bin/parmchk' +\
     ' -i {0}.mol2 -f mol2 -o {0}.frcmod -a Y -w Y'.format(prefix)
   os.system(command)
 
 if not (os.path.isfile(os.path.join(prefix+'.prmtop')) and \
         os.path.isfile(os.path.join(prefix+'.inpcrd'))):
-  print '\n*** Generating prmtop and inpcrd files ***'
+  print( '\n*** Generating prmtop and inpcrd files ***')
   tleap_F = open(prefix+'.tleap','w')
   tleap_F.write("""
 source leaprc.gaff2
@@ -89,7 +89,7 @@ else:
 
 db_FN = prefix.lower()+'.db'
 if not os.path.isfile((db_FN)):
-  print '\n*** Generating MMTK database ***'
+  print( '\n*** Generating MMTK database ***')
   command = 'python '+dirs['script']+'/prmtop2database.py' + \
     ' {0}.prmtop {1}.db --inpcrd_FN {0}.inpcrd'.format(prefix,prefix.lower())
   os.system(command)
@@ -107,7 +107,7 @@ molecule = MMTK.Molecule(db_FN)
 universe = MMTK.Universe.InfiniteUniverse()
 universe.addObject(molecule)
 universe.setForceField(ff)
-print 'MMTK Energy: %f'%universe.energy()
+print( 'MMTK Energy: %f'%universe.energy())
 
 toKeep = [prefix+'.mol2', prefix+'.prmtop', prefix+'.inpcrd', \
   prefix+'.frcmod', prefix.lower()+'.db']

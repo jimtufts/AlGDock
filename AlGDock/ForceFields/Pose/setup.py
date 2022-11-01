@@ -61,7 +61,7 @@ try:
 except ImportError:
     scientific_ok = False
 if not scientific_ok:
-    print "MMTK needs ScientificPython 2.6 or higher"
+    print( "MMTK needs ScientificPython 2.6 or higher")
     raise SystemExit
 
 compile_args = []
@@ -72,7 +72,7 @@ if (int(scientific_version[1]) >= 8 or \
     netcdf_h = os.path.join(sys.prefix, 'include',
                             'python%d.%d' % sys.version_info[:2],
                             'Scientific', 'netcdf.h')
-    print "netcdf.h path", netcdf_h
+    print( "netcdf.h path", netcdf_h)
     if os.path.exists(netcdf_h):
         compile_args.append("-DUSE_NETCDF_H_FROM_SCIENTIFIC=1")
         include_dirs.append(os.path.join(sys.prefix, 'include', 'python%d.%d' % sys.version_info[:2])) # EU

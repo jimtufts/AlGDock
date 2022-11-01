@@ -73,7 +73,7 @@ if args.count is None:
 else:
   inds = range(0,nligands,int(float(nligands)/args.count))
 
-print 'Preparing %d ligands'%nligands
+print( 'Preparing %d ligands'%nligands)
 
 # Submit a job for every args.job_block ligands
 if not os.path.isdir('dock_in'):
@@ -109,7 +109,7 @@ for ind in inds:
   if ncommands==args.job_block or ((ncommands>0) and (ind==inds[-1])):
     command = '; '.join(command_list)
     name = args.library + '.' + '.'.join(code_list)
-    print 'Submitting: ' + command
+    print( 'Submitting: ' + command)
     os.system(' '.join(['python',command_paths['qsub_command'],\
       name, "'"+command+"'",\
       '--input_files', prep_script,\
@@ -121,6 +121,6 @@ for ind in inds:
     out_remaps = []
     code_list = []
     job_count += 1
-    print 'Submitted %d jobs\n'%job_count
+    print( 'Submitted %d jobs\n'%job_count)
     if (args.max_jobs is not None) and (job_count>args.max_jobs):
       break

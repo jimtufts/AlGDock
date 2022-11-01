@@ -41,13 +41,13 @@ if (args.sequence==''):
     raise Exception('No sequence specified')
 
 # Print arguments
-print "align3d.py"
-print "Sequence: ", args.sequence
-print "Reference PDB Identifier:", args.ref_pdb_id
-print "Reference Chain Identifier:", args.ref_chain_id
-print "Reference Resid Range:", args.ref_res_id_range
-print "Minimum sequence identity:", args.min_seq_identity
-print "Minimum equivalent positions:", args.min_equivalent_positions
+print( "align3d.py")
+print( "Sequence: ", args.sequence)
+print( "Reference PDB Identifier:", args.ref_pdb_id)
+print( "Reference Chain Identifier:", args.ref_chain_id)
+print( "Reference Resid Range:", args.ref_res_id_range)
+print( "Minimum sequence identity:", args.min_seq_identity)
+print( "Minimum equivalent positions:", args.min_equivalent_positions)
 
 # Determine the PDB files and chains to download
 chain_hits = []
@@ -59,16 +59,16 @@ for prf in profile.items():
     if prf[0][0] not in pdb_hits:
       pdb_hits.append(prf[0][0])
 
-print "\n*** Downloading original PDB files ***"
+print( "\n*** Downloading original PDB files ***")
 if not os.path.isdir('pdb_original'):
   os.makedirs('pdb_original')
 for pdb_id in pdb_hits:
   if not os.path.isfile('pdb_original/%s.pdb'%pdb_id):
-    print 'Downloading '+pdb_id
+    print( 'Downloading '+pdb_id)
     os.system('curl --compressed http://www.rcsb.org/pdb/files/%s.pdb.gz > pdb_original/%s.pdb.gz'%(pdb_id,pdb_id))
     os.system('gunzip pdb_original/%s.pdb.gz'%pdb_id)
 
-print "\n*** Separating chains ***"
+print( "\n*** Separating chains ***")
 refF = open('reference.pdb','w')
 if not os.path.isdir('chains_original'):
   os.mkdir('chains_original')
@@ -111,8 +111,8 @@ for pdb_id in pdb_hits:
                   (adjusted_res_id in adjusted_res_id_history[chain_id]):
               adjusted_res_id += 1
             if not res_name.startswith('HOH'):
-              print 'In %s, chain %s, residue %s resid %d reassigned to %d'%(\
-              pdb_id, chain_id, res_name, res_id, adjusted_res_id)
+              print( 'In %s, chain %s, residue %s resid %d reassigned to %d'%(\
+              pdb_id, chain_id, res_name, res_id, adjusted_res_id))
           adjusted_res_id_history[chain_id].append(adjusted_res_id)
         else:
           # If it is an old residue, use the last adjusted_res_id value
@@ -134,11 +134,11 @@ for chain_id in outFs.keys():
 if refF is not None:
   refF.close()
 
-print "There are %d PDB entries and %d chains"%(len(pdb_hits),len(chain_hits))
-print "with a minimum sequence identity of %d"%args.min_seq_identity
-print "and at least %d equivalent positions "%args.min_equivalent_positions
+print( "There are %d PDB entries and %d chains"%(len(pdb_hits),len(chain_hits)))
+print( "with a minimum sequence identity of %d"%args.min_seq_identity)
+print( "and at least %d equivalent positions "%args.min_equivalent_positions)
 
-print "\n*** Aligning chains to reference structure ***"
+print( "\n*** Aligning chains to reference structure ***")
 import prody
 
 # Load reference structure
@@ -184,7 +184,7 @@ else:
     ensemble.addCoordset(atommap, weights=atommap.getFlags('mapped'))
     new_pdb_FNs.append(pdb_FN)
 
-  print '%d chains map onto the reference sequence\n'%(len(mappings))
+  print( '%d chains map onto the reference sequence\n'%(len(mappings)))
   ensemble.iterpose()
   prody.saveEnsemble(ensemble, filename=ens_FN[:-8])
   pickle.dump(mappings, open(mappings_FN,'w'))
@@ -199,9 +199,9 @@ else:
     outFN = os.path.join(output_dir,os.path.basename(pdb_FN))
     prody.writePDB(outFN, chain_coords)
 
-print 'There are %d structures in the ensemble\n'%len(ensemble)
+print( 'There are %d structures in the ensemble\n'%len(ensemble))
 
-print "\n*** Principal Components Analysis ***"
+print( "\n*** Principal Components Analysis ***")
 pca_FN = os.path.join('prody.pca.npz')
 if os.path.exists(pca_FN):
   pca = prody.loadModel(pca_FN)

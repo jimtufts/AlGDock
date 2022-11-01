@@ -32,7 +32,7 @@ else:
   raise Exception('Invalid prmtop file/directory!')
 prmtopFNs = [FN for FN in prmtopFNs if os.path.isfile(FN[:-7]+'.inpcrd')]
 
-print '%d prmtop/inpcrd pairs found'%len(prmtopFNs)
+print( '%d prmtop/inpcrd pairs found'%len(prmtopFNs))
 
 job_count = 0
 for prmtop_FN in prmtopFNs:
@@ -46,8 +46,8 @@ for prmtop_FN in prmtopFNs:
   if np.array([os.path.isfile(out_FNs[key]) for key in out_FNs.keys()]).all():
     continue # Grids already calculated
   
-  print 'Calculating interaction grids for %s, with spacing of %f A'%(\
-    prefix, args.spacing[0])
+  print( 'Calculating interaction grids for %s, with spacing of %f A'%(\
+    prefix, args.spacing[0]))
   jobname = '%s.%d'%(prefix, args.spacing[0]*100)
   command = 'python {0}/alchemicalGrids.py --prmtop_FN {1} --inpcrd_FN {2}' + \
     ' --pqr_FN {3}.pqr --PB_FN {3}.PB.nc --ele_FN {3}.ele.{4}.nc' + \
@@ -56,9 +56,9 @@ for prmtop_FN in prmtopFNs:
     {True:'', False:' --counts {6[0]} {6[1]} {6[2]}'}[args.counts is None]
   command = command.format(dirs['script'], prmtop_FN, inpcrd_FN, prefix, \
     int(args.spacing[0]*100), args.spacing, args.counts)
-  print command
+  print( command)
 
-  print 'Submitting: ' + command
+  print( 'Submitting: ' + command)
   import subprocess
   subprocess.call(['python',command_paths['qsub_command'],\
     jobname, command, '--ambertools'] + {True:['--dry'],False:[]}[args.dry])

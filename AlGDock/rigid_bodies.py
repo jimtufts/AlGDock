@@ -189,7 +189,7 @@ if __name__ == '__main__':
 
   dirname = os.path.dirname(os.path.abspath(dbFNs[0]))
   for FN in dbFNs:
-    print 'Loading', FN
+    print( 'Loading', FN)
     dbFN = os.path.abspath(FN)
     if os.path.dirname(dbFN) != dirname:
       raise Exception('Cannot change ligand directory in MMTK')
@@ -201,13 +201,13 @@ if __name__ == '__main__':
     original_xyz = np.copy(universe.configuration().array)
     self = identifier(universe, molecule)
 
-    print 'There are %d unique rings' % len(self.rings)
+    print( 'There are %d unique rings' % len(self.rings))
     self.setOccupancyTo('soft_torsions')
 
     # This tests a conversion to BAT coordinates and back
     BAT = self.BAT(original_xyz, extended=True)
     new_xyz = self.Cartesian(BAT)
-    print sum(sum(new_xyz - original_xyz))
+    print( sum(sum(new_xyz - original_xyz)))
 
     # This rotates a random primary torsion
     from random import randrange

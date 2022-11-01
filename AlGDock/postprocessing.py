@@ -525,7 +525,7 @@ class Postprocessing:
       '-p',self.args.FNs['prmtop'][moiety],'-c',self.args.FNs['inpcrd'][moiety], \
       '-y', AMBER_mdcrd_FN, '-r',script_FN+'.restrt']
     if debug:
-      print ' '.join(args_list)
+      print( ' '.join(args_list))
     p = subprocess.Popen(args_list)
     p.wait()
 
@@ -605,11 +605,11 @@ class Postprocessing:
       p.wait()
     except OSError:
       os.system('ls -ltr')
-      print 'Command: ' + ' '.join([os.path.relpath(self.args.FNs['ambpdb'], cdir), \
+      print( 'Command: ' + ' '.join([os.path.relpath(self.args.FNs['ambpdb'], cdir), \
          '-p', os.path.relpath(self.args.FNs['prmtop']['R'], cdir), \
-         '-pqr'])
-      print 'stdout:\n' + stdoutdata_ambpdb
-      print 'stderr:\n' + stderrdata_ambpdb
+         '-pqr']))
+      print( 'stdout:\n' + stdoutdata_ambpdb)
+      print( 'stderr:\n' + stderrdata_ambpdb)
     inpcrd_F.close()
 
     pqr_F = open(pqr_FN, 'w')
@@ -629,10 +629,10 @@ class Postprocessing:
     try:
       elsize = float(stdoutdata_elsize.strip())
     except ValueError:
-      print 'Command: ' + ' '.join([os.path.relpath(self.args.FNs['elsize'], cdir), \
-       os.path.relpath(pqr_FN, cdir)])
-      print stdoutdata_elsize
-      print 'Error with elsize'
+      print( 'Command: ' + ' '.join([os.path.relpath(self.args.FNs['elsize'], cdir), \
+       os.path.relpath(pqr_FN, cdir)]))
+      print( stdoutdata_elsize)
+      print( 'Error with elsize')
     return elsize
 
   def _gbnsr6_Energy(self,
@@ -697,7 +697,7 @@ class Postprocessing:
       '-p', os.path.relpath(self.args.FNs['prmtop'][moiety], cdir), \
       '-c', os.path.relpath(inpcrd_FN, cdir)]
     if debug:
-      print ' '.join(args_list)
+      print( ' '.join(args_list))
 
     # Write coordinates, run gbnsr6, and store energies
     import subprocess

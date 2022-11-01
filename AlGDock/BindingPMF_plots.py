@@ -73,7 +73,7 @@ class BPMF_plots(BPMF):
     try:
       import matplotlib.pyplot as plt  # @UnresolvedImport
     except:
-      print 'plot_energies requires matplotlib'
+      print( 'plot_energies requires matplotlib')
       return
 
     K = len(getattr(self, process + '_protocol'))
@@ -116,7 +116,7 @@ class BPMF_plots(BPMF):
     try:
       import matplotlib.pyplot as plt  # @UnresolvedImport
     except:
-      print 'plot_energy_ratio requires matplotlib'
+      print( 'plot_energy_ratio requires matplotlib')
       return
 
     K = len(self.dock_protocol)
@@ -360,18 +360,18 @@ class BPMF_plots(BPMF):
         vmd_args.extend(['-size',\
           '%d'%view_args['size'][0],'%d'%view_args['size'][1]])
       vmd_args.extend(['-e', script_FN])
-      print vmd_args
+      print( vmd_args)
       p = subprocess.Popen(vmd_args, \
         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
       (vmd_stdout, vmd_stderr) = p.communicate()
       p.wait()
 
-      print 'script:'
-      print script
-      print 'stdout:'
-      print vmd_stdout
-      print 'stderr:'
-      print vmd_stderr
+      print( 'script:')
+      print( script)
+      print( 'stdout:')
+      print( vmd_stdout)
+      print( 'stderr:')
+      print( vmd_stderr)
 
       if clear_files:
         for FN in [ligand_dcd_FN, ref_ligand_dcd_FN, start_ligand_dcd_FN, \

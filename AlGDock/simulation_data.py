@@ -82,12 +82,12 @@ class SimulationData:
         'data': load_pkl_gz(data_FN)
       }
       if (saved['progress'] is None):
-        print '  no progress information for %s' % self.process
+        print( '  no progress information for %s' % self.process)
       elif (saved['data'] is None):
         saved['progress'] = None
-        print '  missing data in %s' % self.process
+        print( '  missing data in %s' % self.process)
       else:
-        print '  using stored progress and data in %s' % self.process
+        print( '  using stored progress and data in %s' % self.process)
     self.clear()
 
     if saved['progress'] is not None:

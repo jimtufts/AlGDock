@@ -22,9 +22,9 @@ Es = OrderedDict()
 x=np.linspace(1.35,1.6,steps)
 
 for params in param_sets:
-  print
-  print params
-  print
+  print()
+  print( params)
+  print()
   
   ForceField = Interpolation.InterpolationForceField(\
     '../../../Example/grids/LJa.nc',
@@ -34,7 +34,7 @@ for params in param_sets:
     energy_thresh=params['energy_thresh'],
     scaling_property='test_charge')
 
-  print "With C"
+  print( "With C")
   universe.setForceField(ForceField)
 
   universe.atom1.setPosition(Vector(x[0],0.5,1.5))
@@ -43,7 +43,7 @@ for params in param_sets:
 #  print universe.energyTerms()
 #  e, g = universe.energyAndGradients()
 
-  print 'Gradient Test'
+  print( 'Gradient Test')
   gradientTest(universe)
 
   import time
@@ -52,10 +52,10 @@ for params in param_sets:
   for n in range(steps):
     universe.atom1.setPosition(Vector(x[n],0.5,1.5))
     e, g = universe.energyAndGradients()
-  print 'Time to do %d energy and gradient evaluations: %f s'%(\
-    steps, time.time()-start_time)
+  print( 'Time to do %d energy and gradient evaluations: %f s'%(\
+    steps, time.time()-start_time))
 
-  print "Without C"
+  print( "Without C")
   ForceField.use_C = False
 
   universe.setForceField(ForceField)
@@ -66,7 +66,7 @@ for params in param_sets:
 #  print universe.energyTerms()
 #  e, g = universe.energyAndGradients()
 
-  print 'Gradient Test'
+  print( 'Gradient Test')
   gradientTest(universe)
 
   import time
@@ -75,8 +75,8 @@ for params in param_sets:
   for n in range(steps):
     universe.atom1.setPosition(Vector(x[n],0.5,1.5))
     e, g = universe.energyAndGradients()
-  print 'Time to do %d energy and gradient evaluations: %f s'%(\
-    steps, time.time()-start_time)
+  print ('Time to do %d energy and gradient evaluations: %f s'%(\
+    steps, time.time()-start_time))
 
 
 #  import matplotlib.pyplot as plt

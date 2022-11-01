@@ -113,7 +113,7 @@ class converter():
                 if (a in selected) and (a!=a2)], key=atom_name)
             for a4 in sorted(attached_to_a4, key=atom_mass, reverse=True):
               return (a1, a2, a3, a4)
-      print 'Selected atoms:', selected
+      print( 'Selected atoms:', selected)
       raise Exception('No new dihedral angle found!')
 
     # Construct a list of torsion angles
@@ -354,7 +354,7 @@ if __name__ == '__main__':
 
   dirname = os.path.dirname(os.path.abspath(dbFNs[0]))
   for FN in dbFNs:
-    print 'Loading', FN
+    print( 'Loading', FN)
     dbFN = os.path.abspath(FN)
     if os.path.dirname(dbFN) != dirname:
       raise Exception('Cannot change ligand directory in MMTK')
@@ -369,7 +369,7 @@ if __name__ == '__main__':
     # This tests a conversion to BAT coordinates and back
     BAT = self.BAT(original_xyz, extended=True)
     new_xyz = self.Cartesian(BAT)
-    print sum(sum(new_xyz - original_xyz))
+    print( sum(sum(new_xyz - original_xyz)))
 
     # This rotates a random primary torsion
     from random import randrange

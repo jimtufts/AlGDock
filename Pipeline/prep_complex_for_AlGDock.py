@@ -45,17 +45,17 @@ receptor_prefix = os.path.basename(args.receptor_pdb)[:-18]
 complex_prefix = ligand_prefix + '-' + receptor_prefix
 
 if not os.path.isfile(ligand_prefix+'.mol2'):
-  print '\n*** Writing mol2 file with amber atom types ***'
+  print( '\n*** Writing mol2 file with amber atom types ***')
   command = dirs['amber']+'/bin/antechamber' + \
     ' -i {0} -fi mol2 -o {1}.mol2 -fo mol2 -rn LIG'.format(\
       args.ligand_mol2,ligand_prefix)
   os.system(command)
   if not os.path.isfile(ligand_prefix+'.mol2'):
-    print command
+    print( command)
     raise Exception('Could not write mol2 file')
 
 if not os.path.isfile(ligand_prefix+'.frcmod'):
-  print '\n*** Generating frcmod file ***'
+  print( '\n*** Generating frcmod file ***')
   command = dirs['amber']+'/bin/parmchk' +\
     ' -i {0}.mol2 -f mol2 -o {0}.frcmod -a Y -w Y'.format(ligand_prefix)
   os.system(command)
@@ -63,7 +63,7 @@ if not os.path.isfile(ligand_prefix+'.frcmod'):
 if not (os.path.isfile(os.path.join(complex_prefix+'.prmtop')) and \
         os.path.isfile(os.path.join(complex_prefix+'.inpcrd')) and \
         os.path.isfile(os.path.join(complex_prefix+'.pdb'))):
-  print '\n*** Generating prmtop and inpcrd and pdb files ***'
+  print( '\n*** Generating prmtop and inpcrd and pdb files ***')
   tleap_F = open(complex_prefix+'.tleap','w')
   tleap_F.write("""
 source leaprc.ff14SB
@@ -91,7 +91,7 @@ quit
   os.system(command)
 
 if os.path.isfile(os.path.join(complex_prefix+'.pdb')):
-  print '\n*** Setting fixed atoms in pdb file ***'
+  print( '\n*** Setting fixed atoms in pdb file ***')
   command = 'python {0}/label_fixed_atoms.py {1}'
   command = command.format(dirs['script'], os.path.join(complex_prefix+'.pdb'))
   os.system(command)

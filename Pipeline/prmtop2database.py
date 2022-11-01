@@ -36,7 +36,7 @@ parser.add_argument('--inpcrd_FN', help='AMBER inpcrd file')
 parser.add_argument('-f', help='Does nothing')
 args = parser.parse_args()
 
-print "Creating database "+args.db_FN
+print( "Creating database "+args.db_FN)
 
 ### Loads AMBER parameter file
 import AlGDock

@@ -21,8 +21,8 @@ ff1 = CylinderForceField(\
 universe.setForceField(ff1)
 
 e, g = universe.energyAndGradients()
-print universe.energyTerms()
-print e
+print( universe.energyTerms())
+print( e)
 
 gradientTest(universe, delta=0.001)
 #forceConstantTest(universe)

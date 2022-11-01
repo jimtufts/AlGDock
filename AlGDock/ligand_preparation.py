@@ -263,7 +263,7 @@ class LigandPreparation():
           steps_per_trial = max(int(steps_per_trial / 2), 1)
       fmt = "  T = %d, delta_t = %.3f fs, steps_per_trial = %d, acc_rate = %.3f"
       if acc_rate < 0.01:
-        print self.top.universe.energyTerms()
+        print( self.top.universe.energyTerms())
       self.log.tee(fmt % (T, delta_t * 1000, steps_per_trial, acc_rate))
     if normalize:
       self.top.universe.normalizePosition()
