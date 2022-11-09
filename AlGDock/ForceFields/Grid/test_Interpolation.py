@@ -1,10 +1,13 @@
 import AlGDock
 
-from MMTK import *
+import MMTK
 import Interpolation
 from MMTK.ForceFields.ForceFieldTest import gradientTest
 
-universe = InfiniteUniverse()
+import openmm
+
+universe = MMTK.InfiniteUniverse()
+universe = openmm.System()
 
 universe.atom1 = Atom('C', position=Vector(1.1, 0.5, 1.5))
 universe.atom1.test_charge = 1.
@@ -32,9 +35,9 @@ Es = OrderedDict()
 x=np.linspace(1.35,1.6,steps)
 
 for params in param_sets:
-  print
-  print params
-  print
+  print()
+  print( params)
+  print()
   
   ForceField = Interpolation.InterpolationForceField(\
     '../../../Example/grids/LJa.nc',
@@ -47,15 +50,15 @@ for params in param_sets:
 
   universe.atom1.setPosition(Vector(x[0],0.5,1.5))
 
-  print 'Energy Terms:'
-  print universe.energyTerms()
+  print( 'Energy Terms:')
+  print( universe.energyTerms())
   e, g = universe.energyAndGradients()
-  print 'Gradient on Atom 1'
-  print g[universe.atom1]
-  print 'Gradient on Atom 2'
-  print g[universe.atom2]
+  print( 'Gradient on Atom 1')
+  print( g[universe.atom1])
+  print( 'Gradient on Atom 2')
+  print( g[universe.atom2])
 
-  print 'Gradient Test'
+  print( 'Gradient Test')
   gradientTest(universe)
 
   import time
@@ -72,8 +75,8 @@ for params in param_sets:
     universe.atom1.setPosition(Vector(x[n],0.5,1.5))
     e, g = universe.energyAndGradients()
     Es[key][n] = e
-  print 'Time to do %d energy and gradient evaluations: %f s'%(\
-    steps, time.time()-start_time)
+  print( 'Time to do %d energy and gradient evaluations: %f s'%(\
+    steps, time.time()-start_time))
 
 import matplotlib.pyplot as plt
 for key in Es.keys():

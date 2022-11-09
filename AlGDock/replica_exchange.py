@@ -79,8 +79,8 @@ class ReplicaExchange():
     def gMC_initial_setup():
       """
       Initialize BAT converter object.
-      Decide which internal coord to crossover. Here, only the soft torsions will be crossovered.
-      Produce a list of replica (state) index pairs to be swaped. Only Neighbor pairs will be swaped.
+      Decide which internal coord to crossover. Here, only the soft torsions will be crossed-over.
+      Produce a list of replica (state) index pairs to be swapped. Only Neighbor pairs will be swapped.
       Assume that self.top.universe, self.top.molecule and K (number of states) exist
       as global variables when the function is called.
       """

@@ -21,8 +21,14 @@ from AlGDock import dictionary_tools
 
 import MMTK
 import MMTK.Units
-from MMTK.ParticleProperties import Configuration
+import MMTK.ParticleProperties.Configuration as Configuration
 from MMTK.ForceFields import ForceField
+
+import openmm
+import openmm.app as app
+import openmm.app.element as elem
+import openmm as omm
+import openmm.unit as unit
 
 import Scientific
 try:
@@ -42,7 +48,8 @@ from multiprocessing import Process
 # Constants #
 #############
 
-R = 8.3144621 * MMTK.Units.J / MMTK.Units.mol / MMTK.Units.K
+# R = 8.3144621 * MMTK.Units.J / MMTK.Units.mol / MMTK.Units.K
+R = 8.3144621 * unit.joule / unit.mole / unit.kelvin
 
 scalables = ['OBC', 'sLJr', 'sELE', 'LJr', 'LJa', 'ELE']
 
